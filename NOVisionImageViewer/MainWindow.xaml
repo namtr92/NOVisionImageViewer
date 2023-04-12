@@ -1,0 +1,270 @@
+﻿<dx:ThemedWindow x:Class="NOVisionImageViewer.MainWindow" mc:Ignorable="d" Title="NOVISION Image Viewer"  Height="800" Width="1200" Icon="/Icons/new_ocean_group_logo_18_cut_dqS_icon.ico" 
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:local="clr-namespace:NOVisionImageViewer" 
+    ShowGlow="False"
+                 FontSize="{DynamicResource BaseFontSize}"
+    xmlns:panandzoom="clr-namespace:Wpf.Controls.PanAndZoom;assembly=Wpf.Controls.PanAndZoom" xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" Padding="0">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+       
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto">
+
+                </RowDefinition>
+                <RowDefinition>
+
+                </RowDefinition>
+                <RowDefinition Height="auto">
+
+                </RowDefinition>
+            </Grid.RowDefinitions>
+           
+            <Grid x:Name="grid_tool_bar" >
+                <StackPanel Orientation="Horizontal" Margin="4,8" VerticalAlignment="Stretch">
+                    <dx:SimpleButton x:Name="btn_save" Content="Save"
+                                 VerticalAlignment="Center"
+                                 Glyph="{dx:DXImage 'SvgImages/HybridDemoIcons/BottomPanel/HybridDemo_Save.svg'}" 
+                                 Click="btn_save_Click"/>
+                    <Rectangle Width="2" Margin="4,2" Opacity="0.5" Fill="White"> </Rectangle>
+                    <dx:SimpleButton x:Name="btn_select_directory" Content="Open Directory"
+                                 VerticalAlignment="Center"
+                                 Glyph="{dx:DXImage 'SvgImages/Business Objects/BO_Folder.svg'}" 
+                                 Click="btn_select_directory_Click"/>
+                    
+                </StackPanel>
+                <Label Content="{Binding Message}" Margin="0,0,8,0" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
+                <Rectangle VerticalAlignment="Bottom" Height="1" Fill="Black" Opacity="0.2"></Rectangle>
+            </Grid>
+            <Grid x:Name="grid_center" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="260"></ColumnDefinition>
+                    <ColumnDefinition ></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Rectangle HorizontalAlignment="Right" Width="1" Fill="Black" Opacity="0.2"></Rectangle>
+                <Grid x:Name="grid_metadata">
+                    <ScrollViewer >
+                        <StackPanel Margin="16">
+                            <Label Content="Directory" ></Label>
+                            <Rectangle Height="4"></Rectangle>
+                            <TextBox Text="{Binding SelectedDirectory}" IsReadOnly="True" FontWeight="SemiBold" Margin="4,0"></TextBox>
+                            <Rectangle Height="8"></Rectangle>
+                            <Label Content="ID" ></Label>
+                            <Label Content="{Binding SelectedImage.ID}" FontWeight="SemiBold" Margin="4,0"></Label>
+                            <Rectangle Height="8"></Rectangle>
+
+                            <Label Content="File name" ></Label>
+                            <Label Content="{Binding SelectedImage.FileName}" FontWeight="SemiBold" Margin="4,0"></Label>
+                            <Rectangle Height="8"></Rectangle>
+                            <Label Content="Creation time" ></Label>
+                            <Label Content="{Binding SelectedImage.CreationTime}" FontWeight="SemiBold" Margin="4,0"></Label>
+                            <Grid>
+                                <Label Content="Tags" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                                <dx:SimpleButton Glyph="{dx:DXImage 'SvgImages/Icon Builder/Actions_Settings.svg'}" 
+                                         GlyphHeight="24"
+                                         Padding="4"
+                                         Click="btn_edit_tag_list_Click"
+                                         HorizontalAlignment="Right"></dx:SimpleButton>
+                            </Grid>
+
+                            <Rectangle Height="4"></Rectangle>
+                            <ItemsControl Margin="4,0" ItemsSource="{Binding SelectedImage.Tags}" Height="120">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel></WrapPanel>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border BorderThickness="1" BorderBrush="Black">
+                                            <StackPanel Orientation="Horizontal" Margin="4,2">
+                                                <Label Content="{Binding}" FontWeight="Bold" Margin="8,4"></Label>
+                                                <Rectangle Width="4"></Rectangle>
+                                                <dx:SimpleButton VerticalAlignment="Center"
+                                            Click="btn_remove_tag_Click"
+                                            Glyph="{dx:DXImage 'SvgImages/RichEdit/CloseHeaderAndFooter.svg'}" 
+                                            Background="Transparent" BorderThickness="0"></dx:SimpleButton>
+                                            </StackPanel>
+                                        </Border>
+
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+
+                            </ItemsControl>
+                            <Rectangle Height="8"></Rectangle>
+                            <Label Content="Time filter" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                            <Rectangle Height="4"></Rectangle>
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                                <StackPanel Orientation="Vertical" Margin="0,0">
+                                    <Label Content="Start time" ></Label>
+
+                                    <dxe:DateEdit x:Name="time1"  EditValue="{Binding TimeStart}" 
+                                                  Mask="G" MaskUseAsDisplayFormat="True"  >
+                                        <dxe:DateEdit.StyleSettings>
+                                        <dxe:DateEditNavigatorWithTimePickerStyleSettings/>
+                                        </dxe:DateEdit.StyleSettings>
+                                    </dxe:DateEdit>
+                                    <Rectangle Height="8"></Rectangle>
+                                    <Label Content="Stop time" ></Label>
+                                    <dxe:DateEdit x:Name="time2"  EditValue="{Binding TimeStop}"
+                                                  Mask="G" MaskUseAsDisplayFormat="True" >
+                                        <dxe:DateEdit.StyleSettings>
+                                        <dxe:DateEditNavigatorWithTimePickerStyleSettings/>
+                                        </dxe:DateEdit.StyleSettings>
+                                    </dxe:DateEdit>
+                                </StackPanel>
+
+                                
+                            </Grid>
+                            <Rectangle Height="8"></Rectangle>
+                            <dx:SimpleButton x:Name="btn_filter_time"  
+                                             Content="Filter time"
+                                             GlyphHeight="20"
+                                             Padding="4"
+                                             Glyph="{dx:DXImage 'SvgImages/Spreadsheet/Time.svg'}" 
+                                             Click="btn_filter_time_Click"></dx:SimpleButton>
+                            <Rectangle Height="8"></Rectangle>
+                            <Label Content="Tag filter" FontWeight="Bold" VerticalAlignment="Center">
+                            </Label>
+
+                            <Rectangle Height="4"></Rectangle>
+                            <Grid>
+                                <TextBox Text="{Binding TextFilter}" VerticalContentAlignment="Center" Margin="0,0,38,0"></TextBox>
+                                <dx:SimpleButton x:Name="btn_filter_tag" HorizontalAlignment="Right" 
+                                             GlyphHeight="20"
+                                             Padding="4"
+                                             Glyph="{dx:DXImage 'SvgImages/Dashboards/EnableSearch.svg'}" Click="btn_filter_tag_Click"></dx:SimpleButton>
+                            </Grid>
+                            <Rectangle Height="8"></Rectangle>
+                            <dx:SimpleButton x:Name="btn_filter_empty" HorizontalAlignment="Left" 
+                                         Content="Show no tag images"
+                                             GlyphHeight="20"
+                                             Padding="8,6"
+                                             Glyph="{dx:DXImage 'SvgImages/Spreadsheet/ChartDataLabels_None.svg'}"
+                                         Click="btn_filter_empty_Click"></dx:SimpleButton>
+                            <Rectangle Height="8"></Rectangle>
+                            <dx:SimpleButton x:Name="btn_reset_filter" HorizontalAlignment="Left" 
+                                         Content="Reset filter"
+                                             GlyphHeight="20"
+                                             Padding="8,6"
+                                             Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/ResetView.svg'}" Click="btn_reset_filter_Click"
+                                         ></dx:SimpleButton>
+                            <Rectangle Height="8"></Rectangle>
+                            <Label Content="Summary" FontWeight="Bold" VerticalAlignment="Center">
+                            </Label>
+                            <Rectangle Height="4"></Rectangle>
+                            <dx:SimpleButton x:Name="btn_show_chart" HorizontalAlignment="Left" 
+                                         Content="Tag summary"
+                                             GlyphHeight="20"
+                                             Padding="8,6"
+                                             Glyph="{dx:DXImage 'SvgImages/Dashboards/Chart.svg'}" 
+                                         Click="btn_show_chart_Click"
+                                         ></dx:SimpleButton>
+                        </StackPanel>
+                    </ScrollViewer>
+                    
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    
+                    <panandzoom:ZoomBorder Margin="2" ClipToBounds="True">
+                        <Canvas>
+                            <Image x:Name="image_original" Source="{Binding ImageOriginal}" />
+                        </Canvas>
+                    </panandzoom:ZoomBorder>
+                    <panandzoom:ZoomBorder Grid.Column="1" Margin="2" ClipToBounds="True">
+                        <Canvas>
+                            <Image x:Name="image_screenshot" Source="{Binding ImageScreenshot}" />
+                        </Canvas>
+                    </panandzoom:ZoomBorder>
+                    <ItemsControl ItemsSource="{Binding CurrentTag}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderThickness="4" Margin="8" CornerRadius="4" Background="Black">
+                                    <Border.BorderBrush>
+                                        <SolidColorBrush Color="{Binding Color}"></SolidColorBrush>
+                                    </Border.BorderBrush>
+                                    <Label Content="{Binding Name}" Margin="8,0"></Label>
+                                </Border>
+                            </DataTemplate>
+
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel></WrapPanel>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                    <UniformGrid Grid.ColumnSpan="2" Columns="2" Margin="0,0,0,4" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                        <dx:SimpleButton Content="Previous" 
+                                         Click="btn_pre_Click"
+                                         Margin="0,0,2,0"
+                                         Glyph="{dx:DXImage 'SvgImages/Icon Builder/Actions_Arrow1Left.svg'}"></dx:SimpleButton>
+                        <dx:SimpleButton Content="Next" 
+                                         Click="btn_next_Click"
+                                         Margin="2,0,0,0"
+                                         GlyphAlignment="Right"
+                                         Glyph="{dx:DXImage 'SvgImages/Icon Builder/Actions_Arrow1Right.svg'}"></dx:SimpleButton>
+                    </UniformGrid>
+                </Grid>
+            </Grid>
+
+            <Grid x:Name="grid_bottom" Grid.Row="2">
+                <ListView VirtualizingPanel.IsVirtualizing="True" 
+                      KeyDown="lst_view_KeyDown"
+                      ItemsSource="{Binding ListImage}"
+                      SelectedItem="{Binding SelectedImage}"
+                      ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+                      VirtualizingPanel.VirtualizationMode="Standard" 
+                      ScrollViewer.CanContentScroll="True" x:Name="lst_view" 
+                      
+                      Grid.RowSpan="1" Grid.Row="0" >
+
+
+                    <ListView.ItemTemplate>
+
+                        <DataTemplate>
+                            <StackPanel Margin="4">
+                                <Grid Width="160" >
+                                    <dx:WaitIndicator HorizontalContentAlignment="Center" Margin="0" VerticalContentAlignment="Center" Padding="0" ContentPadding="0" Content="Loading" DeferedVisibility="{Binding IsLoaded}" />
+                                    <Image RenderOptions.BitmapScalingMode="LowQuality"  Source="{Binding Image,IsAsync=True}">
+
+                                    </Image>
+
+                                </Grid>
+                                <Label Content="{Binding FileName}" 
+                                   
+                                   HorizontalAlignment="Center" VerticalAlignment="Bottom"></Label>
+                            </StackPanel>
+
+
+
+                        </DataTemplate>
+
+                    </ListView.ItemTemplate>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Orientation="Horizontal" IsItemsHost="True" FlowDirection="LeftToRight" />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                </ListView>
+            </Grid>
+        </Grid>
+        <dx:WaitIndicator   Grid.RowSpan="2" DeferedVisibility="{Binding IsLoading}" d:IsHidden="True">
+            
+        </dx:WaitIndicator>
+    </Grid>
+    
+    
+    
+</dx:ThemedWindow>

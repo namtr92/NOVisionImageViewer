@@ -1,0 +1,60 @@
+﻿<dx:ThemedWindow
+    x:Class="NOVisionImageViewer.Windows.TagListWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    Title="Tag List" Height="400" Width="600"
+    ShowGlow="False"
+    Icon="/Icons/new_ocean_group_logo_18_cut_dqS_icon.ico" 
+    WindowStyle="ToolWindow"
+    WindowStartupLocation="CenterScreen"
+    FontSize="{DynamicResource BaseFontSize}"
+    >
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ListBox x:Name="lst_tag" Grid.Row="1">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" ></ColumnDefinition>
+                            <ColumnDefinition Width="*" ></ColumnDefinition>
+                            <ColumnDefinition Width="auto" ></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        
+                            <dxe:PopupColorEdit Color="{Binding Color,Mode=TwoWay}" Padding="8,0"></dxe:PopupColorEdit>
+                            <TextBox VerticalAlignment="Stretch" Padding="4,0" Grid.Column="1"
+                                 VerticalContentAlignment="Center" Text="{Binding Name}"></TextBox>
+                        
+                        
+                        <dx:SimpleButton
+                                        Grid.Column="2" 
+                                         Glyph="{dx:DXImage 'SvgImages/Icon Builder/Actions_Delete.svg'}" 
+                            Click="btn_remove_tag_Click"
+                                         HorizontalAlignment="Right"></dx:SimpleButton>
+                    </Grid>
+                    
+                   
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Grid Margin="0,4">
+            <Label Content="Tag list" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8,0,0,0"></Label>
+            <dx:SimpleButton Content="Add tag" VerticalAlignment="Center" Glyph="{dx:DXImage 'SvgImages/Icon Builder/Actions_Add.svg'}"
+                             HorizontalAlignment="Left" Click="SimpleButton_Click"></dx:SimpleButton>
+        </Grid>
+    </Grid>
+</dx:ThemedWindow>

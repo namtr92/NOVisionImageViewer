@@ -1,0 +1,61 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Icons\New Ocean Group logo-32_cut.png" />
+    <None Remove="Icons\New Ocean Group logo-black_cut.png" />
+    <None Remove="Icons\new_ocean_group_logo_18_cut_dqS_icon.ico" />
+    <None Remove="Icons\new_ocean_group_logo_black_cut_G0P_icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Lib\ZoomControl\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WindowsAPICodePack.Shell.CommonFileDialogs" Version="1.1.5" />
+    <PackageReference Include="Wpf.Controls.PanAndZoom" Version="2.3.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DevExpress.Charts.v19.2.Core">
+      <HintPath>D:\ProgramFiles\DevExpress 19.2\Components\Bin\Framework\DevExpress.Charts.v19.2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Data.v19.2">
+      <HintPath>D:\ProgramFiles\DevExpress 19.2\Components\Bin\Framework\DevExpress.Data.v19.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Mvvm.v19.2">
+      <HintPath>D:\ProgramFiles\DevExpress 19.2\Components\Bin\Framework\DevExpress.Mvvm.v19.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v19.2.Core">
+      <HintPath>D:\ProgramFiles\DevExpress 19.2\Components\Bin\Framework\DevExpress.Printing.v19.2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Charts.v19.2">
+      <HintPath>D:\ProgramFiles\DevExpress 19.2\Components\Bin\Framework\DevExpress.Xpf.Charts.v19.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Core.v19.2">
+      <HintPath>D:\ProgramFiles\DevExpress 19.2\Components\Bin\Framework\DevExpress.Xpf.Core.v19.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Printing.v19.2">
+      <HintPath>D:\ProgramFiles\DevExpress 19.2\Components\Bin\Framework\DevExpress.Xpf.Printing.v19.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2019Black.v19.2">
+      <HintPath>D:\ProgramFiles\DevExpress 19.2\Components\Bin\Framework\DevExpress.Xpf.Themes.Office2019Black.v19.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Printing" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icons\New Ocean Group logo-32_cut.png" />
+    <Resource Include="Icons\New Ocean Group logo-black_cut.png" />
+    <Resource Include="Icons\new_ocean_group_logo_18_cut_dqS_icon.ico" />
+    <Resource Include="Icons\new_ocean_group_logo_black_cut_G0P_icon.ico" />
+  </ItemGroup>
+
+</Project>
