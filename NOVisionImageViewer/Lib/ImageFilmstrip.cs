@@ -159,7 +159,7 @@ namespace NOVisionImageViewer.Lib
             try
             {
                 FileName = System.IO.Path.GetFileName(FullPath);
-                CreationTime = File.GetCreationTime(FullPath);
+                CreationTime = File.GetLastWriteTime(FullPath);
             }
             catch (Exception ex)
             {

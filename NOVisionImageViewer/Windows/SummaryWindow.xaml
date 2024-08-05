@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
     xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"
+    xmlns:local="clr-namespace:NOVisionImageViewer.Windows"
     x:Class="NOVisionImageViewer.Windows.SummaryWindow"
     Title="SummaryWindow" Height="800" Width="1000"
     WindowStyle="ToolWindow"
@@ -10,55 +11,108 @@
     WindowStartupLocation="CenterScreen"
     FontSize="{DynamicResource BaseFontSize}"
     >
-
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <dxc:ChartControl x:Name="chart" 
+    <dx:ThemedWindow.Resources>
+        <dx:IEnumerableDataSource x:Key="IEnumerableDataSource">
+            <dx:DesignDataManager.DesignData>
+                <dx:DesignDataSettings DataObjectType="{x:Type local:TagSummary}" RowCount="5"/>
+            </dx:DesignDataManager.DesignData>
+        </dx:IEnumerableDataSource>
+        <dx:IEnumerableDataSource x:Key="IEnumerableDataSource1">
+            <dx:DesignDataManager.DesignData>
+                <dx:DesignDataSettings DataObjectType="{x:Type local:TagSummaryTime}" RowCount="5"/>
+            </dx:DesignDataManager.DesignData>
+        </dx:IEnumerableDataSource>
+    </dx:ThemedWindow.Resources>
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <dxc:ChartControl x:Name="chart" 
                           Margin="2"
                           HorizontalAlignment="Left"   VerticalAlignment="Top">
-            <dxc:ChartControl.Legends>
-                <dxc:Legend MarkerMode="Marker" Visible="True" HorizontalPosition="Left">
-                    <dxc:Legend.Title>
-                        <dxc:LegendTitle Visible="False"/>
-                    </dxc:Legend.Title>
-                </dxc:Legend>
-            </dxc:ChartControl.Legends>
-            <dxc:XYDiagram2D PaneOrientation="Vertical" >
-                <dxc:BarSideBySideSeries2D ColorEach="True"  ArgumentDataMember="TagName" ColorDataMember="" DisplayName="Series 1" LabelsVisibility="True" ValueDataMember="Count" LegendTextPattern="{}{A}: {V}">
-                    <dxc:SeriesPoint Argument="1" Value="6.5"/>
-                    <dxc:SeriesPoint Argument="2" Value="5.5"/>
-                    <dxc:SeriesPoint Argument="3" Value="12.5"/>
-                    <dxc:SeriesPoint Argument="4" Value="11.5"/>
-                    <dxc:SeriesPoint Argument="5" Value="18.5"/>
+                <dxc:ChartControl.Legends>
+                    <dxc:Legend MarkerMode="Marker" Visible="True" HorizontalPosition="Left">
+                        <dxc:Legend.Title>
+                            <dxc:LegendTitle Visible="False"/>
+                        </dxc:Legend.Title>
+                    </dxc:Legend>
+                </dxc:ChartControl.Legends>
+                <dxc:XYDiagram2D PaneOrientation="Vertical" >
+                    <dxc:BarSideBySideSeries2D ColorEach="True"  ArgumentDataMember="TagName" ColorDataMember="" DisplayName="Series 1" LabelsVisibility="True" ValueDataMember="Count" LegendTextPattern="{}{A}: {V}">
+                        <dxc:SeriesPoint Argument="1" Value="6.5"/>
+                        <dxc:SeriesPoint Argument="2" Value="5.5"/>
+                        <dxc:SeriesPoint Argument="3" Value="12.5"/>
+                        <dxc:SeriesPoint Argument="4" Value="11.5"/>
+                        <dxc:SeriesPoint Argument="5" Value="18.5"/>
 
-                </dxc:BarSideBySideSeries2D>
-            </dxc:XYDiagram2D>
+                    </dxc:BarSideBySideSeries2D>
+                </dxc:XYDiagram2D>
 
-        </dxc:ChartControl>
-        <dxc:ChartControl x:Name="chart2" 
+            </dxc:ChartControl>
+            <dxc:ChartControl x:Name="chart2" 
                           Margin="2"
                           HorizontalAlignment="Left"   VerticalAlignment="Top" Grid.Column="1">
-            <dxc:ChartControl.Legends>
-                <dxc:Legend MarkerMode="Marker" Visible="True" HorizontalPosition="Left" Orientation="Vertical" ReverseItems="False" VerticalPosition="Top">
-                    <dxc:Legend.Title>
-                        <dxc:LegendTitle Visible="False"/>
-                    </dxc:Legend.Title>
-                </dxc:Legend>
-            </dxc:ChartControl.Legends>
-            <dxc:SimpleDiagram2D>
-                <dxc:PieSeries2D DisplayName="Series 1" 
+                <dxc:ChartControl.Legends>
+                    <dxc:Legend MarkerMode="Marker" Visible="True" HorizontalPosition="Left" Orientation="Vertical" ReverseItems="False" VerticalPosition="Top">
+                        <dxc:Legend.Title>
+                            <dxc:LegendTitle Visible="False"/>
+                        </dxc:Legend.Title>
+                    </dxc:Legend>
+                </dxc:ChartControl.Legends>
+                <dxc:SimpleDiagram2D>
+                    <dxc:PieSeries2D DisplayName="Series 1" 
                                  
                                  ArgumentDataMember="TagName" ValueDataMember="Count"
                                  LabelsVisibility="True" LegendTextPattern="{}{A} : {VP:P4}">
-                    <dxc:SeriesPoint Argument="1" Value="2"/>
-                    <dxc:SeriesPoint Argument="24" Value="5"/>
+                        <dxc:SeriesPoint Argument="1" Value="2"/>
+                        <dxc:SeriesPoint Argument="24" Value="5"/>
 
-                </dxc:PieSeries2D>
-            </dxc:SimpleDiagram2D>
+                    </dxc:PieSeries2D>
+                </dxc:SimpleDiagram2D>
 
-        </dxc:ChartControl>
+            </dxc:ChartControl>
+        </Grid>
+        <Grid Grid.Row="1">
+            <dxc:ChartControl x:Name="chart_time" 
+                          Margin="2"
+                          HorizontalAlignment="Left"   VerticalAlignment="Top" >
+                <dxc:ChartControl.Legends>
+                    <dxc:Legend MarkerMode="CheckBoxAndMarker" Visible="True" HorizontalPosition="Left">
+                        <dxc:Legend.Title>
+                            <dxc:LegendTitle Visible="False"/>
+                        </dxc:Legend.Title>
+                    </dxc:Legend>
+                </dxc:ChartControl.Legends>
+
+                <dxc:XYDiagram2D x:Name="diagram_time" PaneOrientation="Vertical"  >
+                    <dxc:XYDiagram2D.SeriesItemTemplate>
+                        <DataTemplate>
+                            <dxc:BarSideBySideSeries2D DisplayName="{Binding Name}"
+                                              ArgumentScaleType="DateTime"
+                                  DataSource="{Binding Values}"
+                                  ArgumentDataMember="Time"
+                                  ValueDataMember="Count"/>
+                        </DataTemplate>
+                    </dxc:XYDiagram2D.SeriesItemTemplate>
+                    <dxc:XYDiagram2D.AxisX>
+                        <dxc:AxisX2D GridLinesMinorVisible="True" GridLinesVisible="True">
+                            <dxc:AxisX2D.DateTimeScaleOptions>
+                                <dxc:ManualDateTimeScaleOptions  AutoGrid="False"
+                                                            GridAlignment="Hour" MeasureUnit="Hour" 
+                                                           />
+                            </dxc:AxisX2D.DateTimeScaleOptions>
+                        </dxc:AxisX2D>
+                    </dxc:XYDiagram2D.AxisX>
+                </dxc:XYDiagram2D>
+
+            </dxc:ChartControl>
+        </Grid>
     </Grid>
+
 </dx:ThemedWindow>

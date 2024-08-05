@@ -6,8 +6,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:local="clr-namespace:NOVisionImageViewer" 
     ShowGlow="False"
-                 FontSize="{DynamicResource BaseFontSize}"
-    xmlns:panandzoom="clr-namespace:Wpf.Controls.PanAndZoom;assembly=Wpf.Controls.PanAndZoom" xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" Padding="0">
+    FontSize="{DynamicResource BaseFontSize}"
+    xmlns:panandzoom="clr-namespace:Wpf.Controls.PanAndZoom;assembly=Wpf.Controls.PanAndZoom" 
+                 xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" 
+                 xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" Padding="0">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
@@ -38,6 +40,11 @@
                                  VerticalAlignment="Center"
                                  Glyph="{dx:DXImage 'SvgImages/Business Objects/BO_Folder.svg'}" 
                                  Click="btn_select_directory_Click"/>
+                    <Rectangle Width="2" Margin="4,2" Opacity="0.5" Fill="White"></Rectangle>
+                    <dx:SimpleButton x:Name="btn_export_data" Content="Export data"
+                                 VerticalAlignment="Center"
+                                 Glyph="{dx:DXImage 'SvgImages/Business Objects/BO_Folder.svg'}" 
+                                 Click="btn_export_data_Click"/>
                     
                 </StackPanel>
                 <Label Content="{Binding Message}" Margin="0,0,8,0" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
@@ -236,7 +243,9 @@
                         <DataTemplate>
                             <StackPanel Margin="4">
                                 <Grid Width="160" >
-                                    <dx:WaitIndicator HorizontalContentAlignment="Center" Margin="0" VerticalContentAlignment="Center" Padding="0" ContentPadding="0" Content="Loading" DeferedVisibility="{Binding IsLoaded}" />
+                                    <dx:WaitIndicator HorizontalContentAlignment="Center" Margin="0" 
+                                                      VerticalContentAlignment="Center" Padding="0" ContentPadding="0" 
+                                                      Content="Loading" DeferedVisibility="{Binding IsLoaded}" />
                                     <Image RenderOptions.BitmapScalingMode="LowQuality"  Source="{Binding Image,IsAsync=True}">
 
                                     </Image>
@@ -260,7 +269,7 @@
                 </ListView>
             </Grid>
         </Grid>
-        <dx:WaitIndicator   Grid.RowSpan="2" DeferedVisibility="{Binding IsLoading}" d:IsHidden="True">
+        <dx:WaitIndicator   Grid.RowSpan="2" DeferedVisibility="{Binding IsLoading}" Content="{Binding LoadingMessage}" d:IsHidden="True">
             
         </dx:WaitIndicator>
     </Grid>

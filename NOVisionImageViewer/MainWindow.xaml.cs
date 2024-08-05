@@ -133,6 +133,11 @@ namespace NOVisionImageViewer
         {
             ViewModel.Instance.FilterTime();
         }
+
+        private void btn_export_data_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.Instance.ExportData();
+        }
     }
     public class ViewModel:INotifyPropertyChanged
     {
@@ -166,6 +171,22 @@ namespace NOVisionImageViewer
                 {
                     _is_loading = value;
                     RaisePropertyChanged("IsLoading");
+                }
+            }
+        }
+        string _loading_message;
+        public string LoadingMessage
+        {
+            get
+            {
+                return _loading_message;
+            }
+            set
+            {
+                if (_loading_message != value)
+                {
+                    _loading_message = value;
+                    RaisePropertyChanged("LoadingMessage");
                 }
             }
         }
@@ -557,7 +578,90 @@ namespace NOVisionImageViewer
             });
             
         }
-        
+        void SaveImageWithScreenshot()
+        {
+
+        }
+        public void ExportData()
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+            //diag.folder
+            // diag.SelectedPath = acq.Record_path;
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                string directory = dialog.FileName;
+                Task.Run(() =>
+                {
+                    IsLoading = true;
+                    try
+                    {
+                        List<string> createdFolder = new List<string>();
+                        int count = 1;
+                        int len = ListImage.Count;
+                        foreach (var item in ListImage)
+                        {
+                            LoadingMessage = String.Format("Exporting images {0}/{1}", count, len);
+                            if (item.Tags.Count == 0)
+                            {
+                                string tag = "no tag";
+                                if (!createdFolder.Contains(tag))
+                                {
+                                    if (!System.IO.Directory.Exists(System.IO.Path.Combine(directory, tag)))
+                                    {
+                                        System.IO.Directory.CreateDirectory(System.IO.Path.Combine(directory, tag));
+                                    }
+                                    if (!System.IO.Directory.Exists(System.IO.Path.Combine(directory, tag, "screenshot")))
+                                    {
+                                        System.IO.Directory.CreateDirectory(System.IO.Path.Combine(directory, tag, "screenshot"));
+                                    }
+                                    createdFolder.Add(tag);
+                                }
+
+                                System.IO.File.Copy(item.FullPath, System.IO.Path.Combine(directory, tag, item.FileName));
+                                //copy screenshot
+                                string screenshotpath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(item.FullPath), "screenshot", item.FileName);
+                                if (System.IO.File.Exists(screenshotpath))
+                                {
+                                    System.IO.File.Copy(screenshotpath, System.IO.Path.Combine(directory, tag, "screenshot", item.FileName));
+                                }
+                                continue;
+                            }
+                            foreach (var tag in item.Tags)
+                            {
+                                if (!createdFolder.Contains(tag))
+                                {
+                                    if (!System.IO.Directory.Exists(System.IO.Path.Combine(directory, tag)))
+                                    {
+                                        System.IO.Directory.CreateDirectory(System.IO.Path.Combine(directory, tag));
+                                    }
+                                    if (!System.IO.Directory.Exists(System.IO.Path.Combine(directory, tag, "screenshot")))
+                                    {
+                                        System.IO.Directory.CreateDirectory(System.IO.Path.Combine(directory, tag, "screenshot"));
+                                    }
+                                    createdFolder.Add(tag);
+                                }
+                                if(!System.IO.File.Exists(System.IO.Path.Combine(directory, tag, item.FileName)))
+                                System.IO.File.Copy(item.FullPath, System.IO.Path.Combine(directory, tag, item.FileName));
+                                //copy screenshot
+                                string screenshotpath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(item.FullPath), "screenshot", item.FileName);
+                                if (System.IO.File.Exists(screenshotpath))
+                                {
+                                    if (!System.IO.File.Exists(System.IO.Path.Combine(directory, tag, "screenshot", item.FileName)))
+                                        System.IO.File.Copy(screenshotpath, System.IO.Path.Combine(directory, tag, "screenshot", item.FileName));
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                    IsLoading = false;
+                });
+            }
+            
+        }
         public string MetadataFile { get; set; }
     }
     public class Tag
